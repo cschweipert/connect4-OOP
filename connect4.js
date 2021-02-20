@@ -14,13 +14,17 @@ class Game {
     this.currPlayer = 1; // active player: 1 or 2
     this.board = []; // array of rows, each row is array of cells  (board[y][x])
   };
-  
+
+  /** makeBoard: create in-JS board structure:
+ *   board = array of rows, each row is array of cells  (board[y][x])
+ */
   makeBoard() {
     for (let y = 0; y < this.HEIGHT; y++) {
       this.board.push(Array.from({ length: this.WIDTH }));
     };
   };
 
+/** makeHtmlBoard: make HTML table and row of column tops. */
   makeHtmlBoard() {
     const board = document.getElementById('board');
   
@@ -50,6 +54,7 @@ class Game {
     }
   }
 
+  /** findSpotForCol: given column x, return top empty y (null if filled) */
   findSpotForCol(x) {
     for (let y = this.HEIGHT - 1; y >= 0; y--) {
       if (!this.board[y][x]) {
@@ -70,7 +75,8 @@ class Game {
   }
 
   endGame(msg) {
-    alert(msg);
+    setTimeout(()=> alert(msg), 500);
+    setTimeout(()=> restart(), 500);
   }
 
   handleClick(evt) {
@@ -89,12 +95,12 @@ class Game {
     
     // check for win
     if (this.checkForWin()) {
-      return endGame(`Player ${this.currPlayer} won!`);
+      return this.endGame(`Player ${this.currPlayer} won!`);
     }
     
     // check for tie
     if (this.board.every(row => row.every(cell => cell))) {
-      return endGame('Tie!');
+      return this.endGame('Tie!');
     }
       
     // switch players
@@ -137,21 +143,26 @@ class Game {
 }
 
 let game = new Game(7,6);
+let startButton = document.getElementById("start");
+startButton.addEventListener("click", ()=> {
+  restart();
+  game.makeBoard();
+  game.makeHtmlBoard();
+
+} )
+
+let restart = function() {
+  game.board = [];
+  document.getElementById('board').innerHTML = "";
+
+}
+
+//make reset function
+//empty board array
+//make html board = nothing
 
 
-/** makeBoard: create in-JS board structure:
- *   board = array of rows, each row is array of cells  (board[y][x])
- */
-
-
-
-/** makeHtmlBoard: make HTML table and row of column tops. */
-
-
-
-/** findSpotForCol: given column x, return top empty y (null if filled) */
-
-
+//(game.makeBoard(), game.makeHtmlBoard());
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
@@ -167,7 +178,3 @@ let game = new Game(7,6);
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
-
-
-game.makeBoard();
-game.makeHtmlBoard();
