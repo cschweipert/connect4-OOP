@@ -6,6 +6,31 @@
  */
 
 
+
+class Player {
+
+  constructor(COLOR, CSSCLASS) {
+    this.COLOR = COLOR;
+    this.CSSCLASS = CSSCLASS;
+    this.PIECES = document.getElementsByClassName(CSSCLASS);
+    this.NAME = CSSCLASS
+  }
+}
+
+function pieceColor() {
+  player1.PIECES.style.backgroundColor = player1.COLOR;
+  player2.PIECES.style.backgroundColor = player2.COLOR;
+}
+
+// let p1Pieces = document.getElementByClassName("p1");
+// let p2Pieces = document.getElementsByClassName("p2");
+
+let player1Color = document.getElementById("player1").value;
+let player2Color = document.getElementById("player2").value;
+
+let player1 = new Player(player1Color, 'p1');
+let player2 = new Player(player2Color, 'p2');
+
 class Game {
 
   constructor(WIDTH, HEIGHT) {
